@@ -9,6 +9,85 @@
 
 ## DOMATH
 Write a program `domath.c` and compile it as `domath`. The program should accept **two** arguments, create **four** child processes and pass the arguments to the child processes. Each of the child processes should perfom an arithmetic operation over the arguments (like addition, subtraction, multiplication or division) as shown below. File `domath.c` should contain code of parent process and all its child processes.
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+int calc(int *arr, int n) {
+    int sum = 0;
+    int multi=0;
+    int division=0;
+    int subtraction=0;
+    for (i = 1; i < n; i += 2) {
+        sum = sum + arr[i];
+        multi=multi*arr[i];
+        division= arr[n-1]/arr[n-6];
+        subtraction=arr[n]-arr[n-2];
+    }
+    return sum;
+}
+
+int main(void) {
+    int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        return 1;
+    }
+    else if (pid == 0) {
+        printf("I am the child process\n");
+
+        int child_sum = calc(arr, n);
+        exit(child_sum);
+    }
+    else if (pid == 1) {
+        printf("I am the child process\n");
+
+        int child_multi = multi(arr, n);
+        exit(child_multi);
+    }
+    else if (pid == 2) {
+        printf("I am the child process\n");
+
+        int child_division = div(arr, n);
+        exit(child_division);
+    }
+    else if (pid == 3) {
+        printf("I am the child process\n");
+
+        int child_subtraction = subtraction(arr, n);
+        exit(child_subtraction);
+    }
+    else {
+        printf("I am the parent process\n");
+
+        int parent_sum = calc(arr, n);
+        int parent_multi=multi(arr, n);
+        int parent_division = div(arr, n);
+        int parent_subtraction = subtraction(arr, n);
+
+        int child_sum;
+        if (wait(&child_sum) == -1) {
+            perror("wait failed");
+        }
+
+        else if {
+            printf("Sum by child: %d\n", child_sum);
+            printf("Multiplication by child: %d\n",child_multi);
+            printf("Division by child: %d\n",child_division);
+            printf("Subtraction bu child :%d\n", child_subraction)
+        }
+        printf("Sum by parent: %d\n", parent_sum);
+        printf("Multiplication by parent: %d\n",parent_multi);
+        printf("Division by parent: %d\n",parent_division);
+        printf("Subtraction by parent:%d\n", parent_subraction)
+    }
+
+    return 0;
+}
+
 
 ```
 $ gcc domath.c -o domath
